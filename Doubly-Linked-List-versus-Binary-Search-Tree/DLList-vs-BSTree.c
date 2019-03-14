@@ -1,5 +1,5 @@
 ﻿/* ->
-// Data Structure: Doubly Linked List
+// Data Structure: Doubly Linked List and Binary Search Tree
 // Authors: 
 -> Vitor Barcelos de Cerqueira
 -> Ramon Basto Callado
@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "/Headers/BSTree.h"
 #include "/Headers/DLList.h"
 
 int main() {
@@ -26,5 +27,18 @@ int main() {
   showListFront_DLList(L1);
   showListRear_DLList(L1);
   printf("%d\n", search_DLList(L1, 60));
+  
+  bTree_t *B1 = new_BSTree();
+  add_BSTree(B1, 10);
+  add_BSTree(B1, 8);
+  add_BSTree(B1, 12);
+  add_BSTree(B1, 9);
+  add_BSTree(B1, 7);
+  add_BSTree(B1, 11);
+  add_BSTree(B1, 13);
+  showPreOrder_BSTree(B1);
+  printf("Existe: %d\n", search_BSTree(B1, 16));
+  printf("Ten: %d\n", B1->t_search);
+
   return 0;
 }
