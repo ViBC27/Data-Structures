@@ -2,7 +2,7 @@
 
 This project was created to compose the second note of the Bimonthly Assessment (AB) of the Federal University of Alagoas (UFAL).
 
-|   |  Authors           | Email ---------------------| Website -------| Lattes -------|
+|   |  Authors           | Email                      | Website        | Lattes        |
 |---|--------------------|----------------------------|----------------|---------------|
 | 1 | Vitor B. Cerqueira | vbc@ic.ufal.br             | [Website][100] | [Lattes][101] |
 | 2 | Ramon B. Callado   | rbcll@ic.ufal.br           | [Website]      | [Lattes]      |
