@@ -20,6 +20,7 @@ struct node {
 struct list {
   node_t *front;
   node_t *rear;
+  int t_search;
   int size;
 };
 

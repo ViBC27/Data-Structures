@@ -15,6 +15,7 @@
 list_t* new_DLList() {
   list_t *list = (list_t*) malloc(sizeof(list_t));
   list->front = list->rear = NULL;
+  list->t_search = 0;
   list->size = 0;
   return list;
 }
@@ -29,13 +30,14 @@ void addFront_DLList(list_t *list, int value) {
     list->front = list->rear = newNode;
   }
   else {
+    list->front->previous = newNode;
     newNode->next = list->front;
     list->front = newNode;
   }  
 }
 
 void showListFront_DLList(list_t *list) {
-  if(list->size == 0) {
+  if(isEmpty_DLList(list)) {
     printf("Doubly Linked List Underflow\n");
   }
   else {
@@ -48,8 +50,22 @@ void showListFront_DLList(list_t *list) {
   }
 }
 
+void showListRear_DLList(list_t *list) {
+  if(isEmpty_DLList(list)) {
+    printf("Doubly Linked List Underflow\n");
+  }
+  else {
+    node_t *nAux = list->rear;
+    while(nAux->previous != NULL) {
+      printf("%d ", nAux->value);
+      nAux = nAux->previous;
+    }
+    printf("%d\n", nAux->value);
+  }
+}
+
 int getFront_DLList(list_t *list) {
- if(list->size == 0) {
+ if(isEmpty_DLList(list)) {
     printf("Doubly Linked List Underflow\n");
     return INT_MIN;
   }
@@ -59,11 +75,37 @@ int getFront_DLList(list_t *list) {
 }
 
 int getRear_DLList(list_t *list) {
- if(list->size == 0) {
+ if(isEmpty_DLList(list)) {
     printf("Doubly Linked List Underflow\n");
     return INT_MIN;
   }
   else {
     return list->rear->value;
   }
+}
+
+int search_DLList(list_t *list, int value) {
+  if(isEmpty_DLList(list)) {
+    printf("Doubly Linked List Underflow\n");
+    return INT_MIN;
+  }
+  else {
+    node_t *nAux = list->front;
+    list->t_search = 0;
+
+    while(nAux != NULL) {
+      list->t_search += 1;
+      if(nAux->value == value) {
+        return 1;
+      }
+      nAux = nAux->next;
+    }
+    printf("Element not found\n");
+    printf("Attempts: %d\n", list->t_search);
+    return 0;
+  }
+}
+
+int isEmpty_DLList(list_t *list) {
+  return (list->size == 0);
 }
