@@ -36,6 +36,23 @@ void addFront_DLList(list_t *list, int value) {
   }  
 }
 
+void addRear_DLList(list_t *list, int value){  
+  node_t *newNode = (node_t*) malloc(sizeof(node_t));
+  newNode->value = value;
+  newNode->previous = NULL;
+  newNode->next = NULL;
+  list->size += 1;
+  if (list->rear == NULL){
+    list->front = newNode;
+    list->rear = newNode; 
+  }
+  else{
+    list->rear->next = newNode;
+    newNode->previous = list->rear;
+    list->rear = newNode;
+  }
+}
+
 void showListFront_DLList(list_t *list) {
   if(isEmpty_DLList(list)) {
     printf("Doubly Linked List Underflow\n");

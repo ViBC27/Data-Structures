@@ -19,6 +19,11 @@ int main() {
   addFront_DLList(L1, 30);
   addFront_DLList(L1, 40);
   addFront_DLList(L1, 50);
+  addRear_DLList(L1, 60);
+  addRear_DLList(L1, 70);
+  addRear_DLList(L1, 80);
+  addRear_DLList(L1, 90);
+  addRear_DLList(L1, 100);
   printf("%d\n", getFront_DLList(L1));
   printf("%d\n", getRear_DLList(L1));
   showListFront_DLList(L1);
@@ -33,6 +38,7 @@ int main() {
   add_BSTree(B1, 8);
   add_BSTree(B1, 12);
   add_BSTree(B1, 9);
+  erase_BSTree(B1);
   add_BSTree(B1, 7);
   add_BSTree(B1, 11);
   add_BSTree(B1, 13);

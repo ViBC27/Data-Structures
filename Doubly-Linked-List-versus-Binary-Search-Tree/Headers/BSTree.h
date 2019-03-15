@@ -33,7 +33,7 @@ struct bTree {
 /* [08] -> Check if the tree is empty. */
 
 /* [00] */ bTree_t* new_BSTree();
-/* [01] */ void erase_BSTree();
+/* [01] */ void erase_BSTree(bTree_t *bTree);
 /* [02] */ void add_BSTree(bTree_t *bTree, int value);
 /* [03] */ void remove_BSTree(bTree_t *bTree, int value);
 /* [04] */ void showInOrder_BSTree(bTree_t *bTree);
@@ -43,6 +43,7 @@ struct bTree {
 /* [08] */ int isEmpty_BSTree(bTree_t *bTree);
 
 nodeBst_t* newNode_BSTree(int value, nodeBst_t *L, nodeBst_t *R);
+void eraseAux_BSTree(nodeBst_t *bt);
 nodeBst_t* addAux_BSTree(nodeBst_t *bt, int value);
 void showInOrderAux_BSTree(nodeBst_t *bt);
 void showPreOrderAux_BSTree(nodeBst_t *bt);
