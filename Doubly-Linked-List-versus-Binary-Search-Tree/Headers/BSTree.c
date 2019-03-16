@@ -19,6 +19,11 @@ bTree_t* new_BSTree() {
   return newBSTree;
 }
 
+void erase_BSTree(bTree_t *bTree){
+  eraseAux_BSTree(bTree->root);
+  bTree->root = NULL;
+}
+
 void add_BSTree(bTree_t *bTree, int value) {
   bTree->root = addAux_BSTree(bTree->root, value);
 }
@@ -68,6 +73,15 @@ nodeBst_t* newNode_BSTree(int value, nodeBst_t *L, nodeBst_t *R) {
   newNodeBSTree->left = L;
   newNodeBSTree->right = R;
   return newNodeBSTree;
+}
+
+void eraseAux_BSTree(nodeBst_t *bt){
+  if (!isEmptyAux_BSTree(bt)){
+    eraseAux_BSTree(bt->left);
+    eraseAux_BSTree(bt->right);
+    free(bt);
+    bt = NULL;
+  }
 }
 
 nodeBst_t* addAux_BSTree(nodeBst_t *bt, int value) {
