@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "heap.h"
+#include "huff.h"
 #define MAX_SIZE 257
 
 heap_t* newHeap() {
