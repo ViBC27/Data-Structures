@@ -1,6 +1,15 @@
-﻿// Huff
-huff_t *newNode_Huff(unsigned char byte);
-huff_t *agroupNodes_Huff(huff_t *left, huff_t *right);
+/* ->
+// Data Structure: Huffman
+// Authors: 
+-> Vitor Barcelos de Cerqueira
+-> Ramon Basto Callado
+-> Daniel melo de lima
+-> Erick Pernambuco
+<- */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "huff.h"
 
 huff_t *newNode_Huff(unsigned char byte) {
   huff_t *newNode = (huff_t*) malloc(sizeof(huff_t));
