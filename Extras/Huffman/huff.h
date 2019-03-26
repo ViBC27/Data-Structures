@@ -19,6 +19,6 @@ struct huff {
 };
 
 huff_t *newNode_Huff(unsigned char byte);
-huff_t *agroupNodes_Huff(huff_t *left, huff_t *right);
+huff_t *agroupItems_Huff(huff_t *left, huff_t *right);
 
 #endif
