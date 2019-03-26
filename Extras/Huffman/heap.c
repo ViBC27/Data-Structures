@@ -9,18 +9,16 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "heap.h"
-#include "huff.h"
-#define MAX_SIZE 257
+#include <heap.h>
 
-heap_t* newHeap() {
+heap_t* new_Heap() {
   heap_t *heap = (heap_t*) malloc(sizeof(heap_t));
   heap->size = 0;
   return heap;
 }
 
 void enqueue(heap_t *heap, huff_t *item) {
-  if(heap->size >= MAX_SIZE) {
+  if(heap->size >= SIZE_HEAP) {
     printf("Heap overflow\n");
   } 
   else {
@@ -36,7 +34,7 @@ void enqueue(heap_t *heap, huff_t *item) {
 }
 
 huff_t *dequeue(heap_t *heap) {
-  if(isEmpty(heap)) {
+  if(isEmpty_Heap(heap)) {
     printf("Heap underflow\n");
     return NULL;
   } 
@@ -60,7 +58,7 @@ void minHeapify(heap_t *heap, int i) {
     smaller = i;
   }
   if(right_index <= heap->size && heap->data[right_index]->frequency <= heap->data[smaller]->frequency) {
-    smaller = right_index;
+    smaller = right_index; 
   }
   if(heap->data[i]->frequency != heap->data[smaller]->frequency) {
     swap(heap->data[i], heap->data[smaller]);
@@ -74,10 +72,10 @@ void swap(huff_t *a, huff_t *b) {
   *b = c;
 }
 
-void showHeap(heap_t *heap) {
+void show_Heap(heap_t *heap) {
   int i;
   for(i = 1; i <= heap->size; i++) {
-    printf("%c ", heap->data[i]->item);
+    printf("%c", heap->data[i]->byte);
   }
   printf("\n");
 }
@@ -92,6 +90,6 @@ int getRightIndex(int i) {
   return (i << 1) + 1;
 }
 
-int isEmpty(heap_t *heap) {
+int isEmpty_Heap(heap_t *heap) {
   return (heap->size == 0);
 }
