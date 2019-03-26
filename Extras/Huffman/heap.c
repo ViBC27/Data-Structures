@@ -1,48 +1,16 @@
+/* ->
+// Data Structure: Heap
+// Authors: 
+-> Vitor Barcelos de Cerqueira
+-> Ramon Basto Callado
+-> Daniel melo de lima
+-> Erick Pernambuco
+<- */
+
 #include <stdio.h>
 #include <stdlib.h>
+#include "heap.h"
 #define MAX_SIZE 257
-
-typedef struct heap heap_t;
-typedef struct huff huff_t;
-struct heap {
-  int size;
-  huff_t *data[MAX_SIZE];
-};
-
-struct huff {
-  unsigned char item;
-  int frequency;
-  huff_t *left;
-  huff_t *right;
-};
-
-// Heap
-heap_t* newHeap();
-void enqueue(heap_t *heap, huff_t *item);
-huff_t *dequeue(heap_t *heap);
-int getParentIndex(int i);
-int getLeftIndex(int i);
-int getRightIndex(int i);
-void minHeapify(heap_t *heap, int i);
-int isEmpty(heap_t *heap);
-void swap(huff_t *a, huff_t *b);
-void showHeap(heap_t *heap);
-
-// Huff
-huff_t *newNode_Huff(unsigned char item);
-huff_t *agroupNodes_Huff(huff_t *left; huff_t *right);
-
-int main() {
-  heap_t *heap = newHeap();
-  huff_t* a = newNode_Huff('a');
-  huff_t* b = newNode_Huff('a');
-  huff_t* c = newNode_Huff('b');
-  enqueue(heap, a);
-  enqueue(heap, b);
-  enqueue(heap, c);
-  showHeap(heap);
-  return 0;
-}
 
 heap_t* newHeap() {
   heap_t *heap = (heap_t*) malloc(sizeof(heap_t));
@@ -80,16 +48,6 @@ huff_t *dequeue(heap_t *heap) {
   }
 }
 
-int isEmpty(heap_t *heap) {
-  return (heap->size == 0);
-}
-
-void swap(huff_t *a, huff_t *b) {
-  huff_t c = *a;
-  *a = *b;
-  *b = c;
-}
-
 void minHeapify(heap_t *heap, int i) {
   int smaller;
   int left_index = getLeftIndex(i);
@@ -107,6 +65,12 @@ void minHeapify(heap_t *heap, int i) {
     swap(heap->data[i], heap->data[smaller]);
     minHeapify(heap, smaller);
   }
+}
+
+void swap(huff_t *a, huff_t *b) {
+  huff_t c = *a;
+  *a = *b;
+  *b = c;
 }
 
 void showHeap(heap_t *heap) {
@@ -127,20 +91,6 @@ int getRightIndex(int i) {
   return (i << 1) + 1;
 }
 
-huff_t *newNode_Huff(unsigned char item) {
-  huff_t *newNode = (huff_t*) malloc(sizeof(huff_t));
-  newNode->item = item;
-  newNode->frequency = 1;
-  newNode->left = NULL;
-  newNode->right = NULL;
-  return newNode;
-}
-
-huff_t *agroupNodes_Huff(huff_t *left; huff_t *right) {
-  huff_t *newNode = (huff_t*) malloc(sizeof(huff_t));
-  newNode->frequency = left->frequency + right->frequency;
-  newNode->left = left;
-  newNode->right = right;
-  newNode->item = '*';
-  return newNode;
+int isEmpty(heap_t *heap) {
+  return (heap->size == 0);
 }
