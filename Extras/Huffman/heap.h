@@ -9,22 +9,24 @@
 
 #ifndef Heap_H
 #define Heap_H
+#include <huff.h>
+#define SIZE_HEAP 257
 
 typedef struct heap heap_t;
 struct heap {
   int size;
-  huff_t *data[MAX_SIZE];
+  huff_t *data[SIZE_HEAP];
 };
 
-heap_t* newHeap();
+heap_t* new_Heap();
 void enqueue(heap_t *heap, huff_t *item);
 huff_t *dequeue(heap_t *heap);
 int getParentIndex(int i);
 int getLeftIndex(int i);
 int getRightIndex(int i);
 void minHeapify(heap_t *heap, int i);
-int isEmpty(heap_t *heap);
+int isEmpty_Heap(heap_t *heap);
 void swap(huff_t *a, huff_t *b);
-void showHeap(heap_t *heap);
+void show_Heap(heap_t *heap);
 
 #endif
