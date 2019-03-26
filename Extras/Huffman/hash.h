@@ -19,3 +19,5 @@ hash_t* new_Hash();
 void erase_Hash(hash_t *hash);
 void put_Hash(hash_t *hash, unsigned char byte);
 void show_Hash(hash_t *hash);
+
+#endif
