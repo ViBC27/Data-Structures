@@ -18,7 +18,10 @@ struct huff {
   huff_t *right;
 };
 
-huff_t *newNode_Huff(unsigned char byte);
+huff_t *newItem_Huff(unsigned char byte);
 huff_t *agroupItems_Huff(huff_t *left, huff_t *right);
+//huff_t* MountHuffTree(heap_t *heap);
+//void HashToHeap(hash_t * hash, heap_t *heap);
+void showHuffman(huff_t* root);
 
 #endif
