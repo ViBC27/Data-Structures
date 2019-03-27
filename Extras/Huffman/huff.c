@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <huff.h>
 
-huff_t *newNode_Huff(unsigned char byte) {
+huff_t *newItem_Huff(unsigned char byte) {
   huff_t *newNode = (huff_t*) malloc(sizeof(huff_t));
   newNode->byte = byte;
   newNode->frequency = 1;
@@ -27,4 +27,16 @@ huff_t *agroupItems_Huff(huff_t *left, huff_t *right) {
   newNode->right = right;
   newNode->byte = '*';
   return newNode;
+}
+
+void showHuffman(huff_t* root) {
+  if(root != NULL) {
+    printf("(%u", root->byte);
+    showHuffman(root->left);
+    showHuffman(root->right);
+    printf(")");
+  }
+  else {
+    printf("()");
+  }
 }
