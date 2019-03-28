@@ -113,7 +113,7 @@ int search_DLList(list_t *list, int value) {
     while(nAux != NULL) {
       list->t_search += 1;
       if(nAux->value == value) {
-        return list->t_search;
+        return 1;
       }
       nAux = nAux->next;
     }
