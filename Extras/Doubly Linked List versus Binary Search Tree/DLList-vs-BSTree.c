@@ -14,21 +14,22 @@
 #include "Headers/DLList.h"
 
 void DLList_vs_BSTree(list_t *list, bTree_t *bTree, int n);
-void add_List_bTree( list_t *list, bTree_t *bTree, int quant);
+void add_List_bTree( list_t *list, bTree_t *bTree, int tNumbers);
 
 int main() {
   list_t *L1 = new_DLList();
   bTree_t *B1 = new_BSTree();
 
-  int quant;
-  printf("Digite o número de dados: ");
-  scanf("%d", &quant);
-  DLList_vs_BSTree(L1, B1, quant);
+  int tNumbers;
+  printf("Total random numbers: ");
+  scanf("%d", &tNumbers);
+  DLList_vs_BSTree(L1, B1, tNumbers);
+  showPreOrder_BSTree(B1);
   return 0;
 }
 
-void DLList_vs_BSTree(list_t *list, bTree_t *bTree, int quant) {
-  add_List_bTree(list, bTree, quant);
+void DLList_vs_BSTree(list_t *list, bTree_t *bTree, int tNumbers) {
+  add_List_bTree(list, bTree, tNumbers);
   FILE *LISTxABB, *NUMBERS;
   LISTxABB = fopen("LISTxABB.txt", "w");
   
@@ -56,7 +57,7 @@ void DLList_vs_BSTree(list_t *list, bTree_t *bTree, int quant) {
   fclose(LISTxABB);
 }
 
-void add_List_bTree(list_t *list, bTree_t *bTree, int quant){
+void add_List_bTree(list_t *list, bTree_t *bTree, int tNumbers) {
   int n;
   srand(time(NULL));
   FILE *NUMBERS;
@@ -67,8 +68,8 @@ void add_List_bTree(list_t *list, bTree_t *bTree, int quant){
     exit(1);
   }
   
-  for(int i = 0; i < quant; i++) {
-    n = rand() % quant;
+  for(int i = 0; i < tNumbers; i++) {
+    n = rand() % tNumbers;
     if(search_BSTree(bTree, n) != 1) {
       addFront_DLList(list, n);
       add_BSTree(bTree, n);
