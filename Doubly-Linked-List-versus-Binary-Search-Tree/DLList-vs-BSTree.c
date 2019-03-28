@@ -96,3 +96,4 @@ void  add_list_bTree( list_t *list, bTree_t *bTree, int quant){
 
   fclose(numbers);
 }
+
