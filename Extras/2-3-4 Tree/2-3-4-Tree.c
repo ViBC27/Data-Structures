@@ -1,4 +1,4 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #define typeof(var) _Generic((var),\
 node2_t *: 2,\
@@ -38,15 +38,17 @@ struct node4 {
 tree234_t* new_Tree234();
 void add_Tree234(tree234_t *tree, int data);
 void show_Tree234(tree234_t *tree);
-node2_t* new2Node(int data);
-node3_t* new3Node(int data1, int data2);
-node4_t* new4Node(int data1, int data2, int data3);
+node2_t* new2Node(int data, void *left, void *right);
+node3_t* new3Node(int data1, int data2, void *left, void *middle, void *right);
+node4_t* new4Node(int data1, int data2, int data3, void *left, void *middle1, void *middle2, void *right);
 void addAux_Tree234(void *root, int data);
 void showAux_Tree234(void *root);
 
 int main() {
   tree234_t *tree = new_Tree234();
   add_Tree234(tree, 10);
+  tree->root = new2Node(9, new3Node(2,3, NULL, NULL, NULL), new4Node(10, 11, 12, NULL, NULL, NULL, NULL));
+  show_Tree234(tree);
   return 0;
 }
 
@@ -62,48 +64,55 @@ void add_Tree234(tree234_t *tree, int data) {
 }
 
 void addAux_Tree234(void *root, int data) {
-  if(typeof(root) == 0) {
-    root = new2Node(data);
-  }
+  if(typeof(root) == 0) {}
 }
 
 // New Node
-node2_t* new2Node(int data) {
+node2_t* new2Node(int data, void *left, void *right) {
   node2_t *newNode = (node2_t*) malloc(sizeof(node2_t));
   newNode->data = data;
-  newNode->left = NULL;
-  newNode->right = NULL;
+  newNode->left = left;
+  newNode->right = right;
   return newNode;
 }
 
-node3_t* new3Node(int data1, int data2) {
+node3_t* new3Node(int data1, int data2, void *left, void *middle, void *right) {
   node3_t *newNode = (node3_t*) malloc(sizeof(node3_t));
   newNode->data1 = data1;
   newNode->data2 = data2;
-  newNode->left = NULL;
-  newNode->middle = NULL;
-  newNode->right = NULL;
+  newNode->left = left;
+  newNode->middle = middle;
+  newNode->right = right;
   return newNode;
 }
 
-node4_t* new4Node(int data1, int data2, int data3) {
+node4_t* new4Node(int data1, int data2, int data3, void *left, void *middle1, void *middle2, void *right) {
   node4_t *newNode = (node4_t*) malloc(sizeof(node4_t));
   newNode->data1 = data1;
   newNode->data2 = data2;
   newNode->data3 = data3;
-  newNode->left = NULL;
-  newNode->middle1 = NULL;
-  newNode->middle2 = NULL;
-  newNode->right = NULL;
+  newNode->left = left;
+  newNode->middle1 = middle1;
+  newNode->middle2 = middle2;
+  newNode->right = right;
   return newNode;
 }
-
 
 // Show Tree
 void show_Tree234(tree234_t *tree) {
   showAux_Tree234(tree->root);
 }
 
+void showAux_Tree234(void *root) {
+  if(root == NULL) return;
+  if(typeof(root) == 2) {
+    node2_t *nAux = (node2_t*) root;
+    printf("%d\n", (int)(nAux->data));
+    showAux_Tree234(nAux->left);
+    showAux_Tree234(nAux->right);
+  }
+}
+/*
 void showAux_Tree234(void *root) {
   if(typeof(root) == 0) return;
   if(typeof(root) == 2) {
@@ -131,3 +140,4 @@ void showAux_Tree234(void *root) {
     showAux_Tree234(nAux->right);
   }
 }
+*/
