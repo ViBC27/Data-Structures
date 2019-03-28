@@ -1,4 +1,4 @@
-﻿/* ->
+/* ->
 // Data Structure: Doubly Linked List
 // Authors: 
 -> Vitor Barcelos de Cerqueira
@@ -126,3 +126,4 @@ int search_DLList(list_t *list, int value) {
 int isEmpty_DLList(list_t *list) {
   return (list->size == 0);
 }
+
