@@ -9,7 +9,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <huff.h>
+#include "huff.h"
 
 huff_t *newItem_Huff(unsigned char byte) {
   huff_t *newNode = (huff_t*) malloc(sizeof(huff_t));

@@ -9,7 +9,7 @@
 
 #ifndef Hash_H
 #define Hash_H
-#include <huff.h>
+#include "huff.h"
 #define SIZE_HASH 256
 
 typedef struct hash hash_t;
