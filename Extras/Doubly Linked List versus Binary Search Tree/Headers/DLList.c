@@ -20,6 +20,16 @@ list_t* new_DLList() {
   return list;
 }
 
+void erase_DLList(list_t *list) {
+  list->rear = NULL;
+  list->size = 0;
+  while(list->front != NULL) {
+    node_t *nAux = list->front;
+    list->front = list->front->next;
+    free(nAux);
+  }
+}
+
 void addFront_DLList(list_t *list, int value) {
   node_t *newNode = (node_t*) malloc(sizeof(node_t));
   newNode->value = value;
@@ -36,21 +46,36 @@ void addFront_DLList(list_t *list, int value) {
   }  
 }
 
-void addRear_DLList(list_t *list, int value){  
+void addRear_DLList(list_t *list, int value) {  
   node_t *newNode = (node_t*) malloc(sizeof(node_t));
   newNode->value = value;
   newNode->previous = NULL;
   newNode->next = NULL;
   list->size += 1;
-  if (list->rear == NULL){
+  if(list->rear == NULL) {
     list->front = newNode;
     list->rear = newNode; 
   }
-  else{
+  else {
     list->rear->next = newNode;
     newNode->previous = list->rear;
     list->rear = newNode;
   }
+}
+
+void remove_DLList(list_t *list, int value) {
+  node_t *nAux = list->front;
+  while(nAux != NULL) {
+    if(nAux->value == value) {
+      nAux->previous->next = nAux->next;
+      nAux->next->previous = nAux->previous;
+      free(nAux);
+      break;
+    }
+    else {
+      nAux = nAux->next;
+    }
+  }    
 }
 
 void showListFront_DLList(list_t *list) {
