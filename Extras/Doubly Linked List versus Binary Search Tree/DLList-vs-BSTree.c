@@ -1,4 +1,4 @@
-﻿/* ->
+/* ->
 // Data Structure: Doubly Linked List and Binary Search Tree
 // Authors: 
 -> Vitor Barcelos de Cerqueira
@@ -9,42 +9,72 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "/Headers/BSTree.h"
-#include "/Headers/DLList.h"
+#include <time.h>
+#include "Headers/BSTree.h"
+#include "Headers/DLList.h"
+
+void DLList_vs_BSTree(list_t *list, bTree_t *bTree, int n);
+void add_List_bTree( list_t *list, bTree_t *bTree, int tNumbers);
 
 int main() {
   list_t *L1 = new_DLList();
-  addFront_DLList(L1, 10);
-  addFront_DLList(L1, 20);
-  addFront_DLList(L1, 30);
-  addFront_DLList(L1, 40);
-  addFront_DLList(L1, 50);
-  addRear_DLList(L1, 60);
-  addRear_DLList(L1, 70);
-  addRear_DLList(L1, 80);
-  addRear_DLList(L1, 90);
-  addRear_DLList(L1, 100);
-  printf("%d\n", getFront_DLList(L1));
-  printf("%d\n", getRear_DLList(L1));
-  showListFront_DLList(L1);
-  showListRear_DLList(L1);
-  printf("%d\n", search_DLList(L1, 40));
-  showListFront_DLList(L1);
-  showListRear_DLList(L1);
-  printf("%d\n", search_DLList(L1, 60));
-  
   bTree_t *B1 = new_BSTree();
-  add_BSTree(B1, 10);
-  add_BSTree(B1, 8);
-  add_BSTree(B1, 12);
-  add_BSTree(B1, 9);
-  erase_BSTree(B1);
-  add_BSTree(B1, 7);
-  add_BSTree(B1, 11);
-  add_BSTree(B1, 13);
-  showPreOrder_BSTree(B1);
-  printf("Existe: %d\n", search_BSTree(B1, 16));
-  printf("Ten: %d\n", B1->t_search);
 
+  int tNumbers;
+  printf("Total random numbers: ");
+  scanf("%d", &tNumbers);
+  DLList_vs_BSTree(L1, B1, tNumbers);
+  showPreOrder_BSTree(B1);
   return 0;
+}
+
+void DLList_vs_BSTree(list_t *list, bTree_t *bTree, int tNumbers) {
+  add_List_bTree(list, bTree, tNumbers);
+  FILE *LISTxABB, *NUMBERS;
+  LISTxABB = fopen("LISTxABB.txt", "w");
+  
+  if(LISTxABB == NULL) {
+    printf("Error, LISTxABB.txt was not created.\n");
+    exit(1);
+  }
+
+  NUMBERS = fopen("NUMBERS.txt", "r");
+  if(NUMBERS == NULL) {
+    printf("Error, NUMBERS.txt was not opened.\n");
+    exit(1);
+  }
+
+  int n; 
+  while(fscanf(NUMBERS, "%d\n", &n) != EOF) {
+    search_DLList(list, n);
+    search_BSTree(bTree, n);
+    fprintf(LISTxABB, "%d %d\n", list->t_search, bTree->t_search);
+  }
+
+  printf("The comparisons are in \"LISTxABB.txt\".\n");
+
+  fclose(NUMBERS);
+  fclose(LISTxABB);
+}
+
+void add_List_bTree(list_t *list, bTree_t *bTree, int tNumbers) {
+  int n;
+  srand(time(NULL));
+  FILE *NUMBERS;
+  NUMBERS = fopen("NUMBERS.txt", "w");
+  
+  if(NUMBERS == NULL) {
+    printf("Error, NUMBERS.txt was not created.\n");
+    exit(1);
+  }
+  
+  for(int i = 0; i < tNumbers; i++) {
+    n = rand() % tNumbers;
+    if(search_BSTree(bTree, n) != 1) {
+      addFront_DLList(list, n);
+      add_BSTree(bTree, n);
+      fprintf(NUMBERS, "%d\n", n);
+    }
+  }
+  fclose(NUMBERS);
 }

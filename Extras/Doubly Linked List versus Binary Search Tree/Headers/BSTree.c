@@ -1,4 +1,4 @@
-﻿/* ->
+/* ->
 // Data Structure: Binary Search Tree
 // Authors: 
 -> Vitor Barcelos de Cerqueira
@@ -45,7 +45,7 @@ void showPostOrder_BSTree(bTree_t *bTree) {
 
 int search_BSTree(bTree_t *bTree, int value) {
   if(isEmpty_BSTree(bTree)) {
-    printf("Element not found\n");
+//    printf("Element not found\n");
     return INT_MIN;
   }
   else {
@@ -53,7 +53,7 @@ int search_BSTree(bTree_t *bTree, int value) {
     bTree->t_search = 0;
     nodeBst_t *btAux = searchAux_BSTree(bTree->root, value, &bTree->t_search, &found);
     if(!found) {
-      printf("Element not found\n");
+ //     printf("Element not found\n");
       return 0;
     }
     else {
