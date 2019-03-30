@@ -54,7 +54,7 @@ void DLList_vs_BSTree(list_t *list, bTree_t *bTree, int quant){
 
   srand((unsigned)time(NULL));
   
-  for (int i = 0; i < quant; ++i){
+  for (int i = 0; i < quant/1000; ++i){
     int numero_aleatorio;
 
     fscanf(numbers,"%d\n", &numero_aleatorio);
@@ -96,4 +96,3 @@ void  add_list_bTree( list_t *list, bTree_t *bTree, int quant){
 
   fclose(numbers);
 }
-
