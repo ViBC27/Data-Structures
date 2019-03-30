@@ -9,7 +9,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <heap.h>
+#include "heap.h"
 
 heap_t* new_Heap() {
   heap_t *heap = (heap_t*) malloc(sizeof(heap_t));

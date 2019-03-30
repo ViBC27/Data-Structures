@@ -9,7 +9,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <hash.h>
+#include "hash.h"
 
 hash_t* new_Hash() {
   hash_t *newHash = (hash_t*) malloc(sizeof(hash_t));

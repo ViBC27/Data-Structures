@@ -9,7 +9,7 @@
 
 #ifndef Heap_H
 #define Heap_H
-#include <huff.h>
+#include "huff.h"
 #define SIZE_HEAP 257
 
 typedef struct heap heap_t;
