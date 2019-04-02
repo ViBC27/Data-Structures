@@ -6,21 +6,24 @@
 #include "compress.h"
 #include "temp.h"
 
-void compress(char *pathFile, char *outputFile) {
-  FILE *File;
-  File = fopen (pathFile,"rb");
-  if(File == NULL) {
-    printf("Not open file.\n");
-    exit(1);
-  }
+typedef unsigned char byte_t;
 
-  heap_t *heap = new_Heap();
+void compress(char *inputFile, char *outputFile) {
+  FILE *inFile =  OpenInputFile(inputFile);
+  
   hash_t *hash = new_Hash();
-  unsigned char byte;
-  while(fscanf(File, "%c", &byte) != EOF) {
-    put_Hash(hash, byte);
-  }
+  heap_t *heap = new_Heap();
+  info_t *bInfo = new_Info();
+  huff_t *root; bool bits[256];
+  byte_t *header;
+
+  ReadInputFile(inFile, hash);  
   HashToHeap(hash, heap);
-  huff_t *root = MountHuffTree(heap);
-  showHuffman(root);
+  root = MountHuffTree(heap);
+  MountInfoTable(root, bInfo, bits, 0);
+  int sTree = size_Huff(root);
+  int sTrash = size_Trash(bInfo);
+  header = MountHeader(sTree, sTrash);
+  MountNewFile(root, bInfo, inputFile, outputFile, header);
+  printf("Done\n");
 }

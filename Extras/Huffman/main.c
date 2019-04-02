@@ -34,10 +34,10 @@ int main(int argc, char *argv[]) {
   int option;
 
   if(argc == 1) {
-    printf("Welcome to VRDZIP.\n\n");
-    printf("[1] - Compress;\n\n");
-    printf("[2] - Descompress;\n\n");
-    printf("[3] - Help;\n\n");
+    printf("\nWelcome to VRDZIP.\n\n");
+    printf("[1] - Compress;\n");
+    printf("[2] - Descompress;\n");
+    printf("[3] - Help;\n");
     printf("[4] - Version.\n\n");
     printf("Enter a command: ");
     scanf("%d", &option);
