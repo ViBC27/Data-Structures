@@ -4,7 +4,6 @@
 -> Vitor Barcelos de Cerqueira
 -> Ramon Basto Callado
 -> Daniel melo de lima
--> Erick Pernambuco
 <- */
 
 #include <stdio.h>
@@ -29,6 +28,25 @@ huff_t *agroupItems_Huff(huff_t *left, huff_t *right) {
   return newNode;
 }
 
+bool isEmpty_Huff(huff_t *tree) {
+  return (tree == NULL);
+}
+
+bool isLeaf_Huff(huff_t *tree) {
+  return (tree->left == NULL && tree->right == NULL);
+}
+
+int size_Huff(huff_t *tree) {
+  int size = 0;
+  if(!isEmpty_Huff(tree)) {
+    if(isLeaf_Huff(tree) && (tree->byte == '*' || tree->byte == 92))
+      size = 1;
+    size += 1 + size_Huff(tree->left);
+    size += size_Huff(tree->right);
+  }
+  return(size);
+}
+
 void showHuffman(huff_t* root) {
   if(root != NULL) {
     printf("(%u", root->byte);
@@ -38,5 +56,16 @@ void showHuffman(huff_t* root) {
   }
   else {
     printf("()");
+  }
+}
+
+void PrintTree_Huff(huff_t *tree, FILE *newFile) {
+  if(!isEmpty_Huff(tree)) {
+    if(isLeaf_Huff(tree) && (tree->byte == '*' || tree->byte == 92)) {
+      fprintf(newFile, "%c", 92);
+    }
+    fprintf(newFile, "%c", tree->byte);
+    PrintTree_Huff(tree->left, newFile);
+    PrintTree_Huff(tree->right, newFile);
   }
 }

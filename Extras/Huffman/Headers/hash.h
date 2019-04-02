@@ -4,13 +4,12 @@
 -> Vitor Barcelos de Cerqueira
 -> Ramon Basto Callado
 -> Daniel melo de lima
--> Erick Pernambuco
 <- */
 
 #ifndef Hash_H
 #define Hash_H
-#include "huff.h"
 #define SIZE_HASH 256
+#include "huff.h"
 
 typedef struct hash hash_t;
 struct hash {

@@ -1,16 +1,15 @@
 /* ->
-// Data Structure: Binary Search Tree
+// Data Structure: Heap
 // Authors: 
 -> Vitor Barcelos de Cerqueira
 -> Ramon Basto Callado
 -> Daniel melo de lima
--> Erick Pernambuco
 <- */
 
 #ifndef Heap_H
 #define Heap_H
-#include "huff.h"
 #define SIZE_HEAP 257
+#include "huff.h"
 
 typedef struct heap heap_t;
 struct heap {

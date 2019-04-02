@@ -4,7 +4,6 @@
 -> Vitor Barcelos de Cerqueira
 -> Ramon Basto Callado
 -> Daniel melo de lima
--> Erick Pernambuco
 <- */
 
 #include <stdio.h>
