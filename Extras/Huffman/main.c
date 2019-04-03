@@ -74,7 +74,6 @@ int main(int argc, char *argv[]) {
     }
   }
   else if(argc == 4) {
-    //pathFile = argv[2]; outputFile = argv[3];
     if(strcmp(command, "-c") == 0) compress(pathFile, outputFile);
     else if(strcmp(command, "--compress") == 0) compress(pathFile, outputFile);
     else if(strcmp(command, "-d") == 0) descompress(pathFile, outputFile);

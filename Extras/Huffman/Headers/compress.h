@@ -12,6 +12,8 @@
 #include "heap.h"
 #include "info.h"
 
+typedef unsigned char byte_t;
+
 void compress(char *inputFile, char *outputFile);
 void ReadInputFile(FILE *inFile, hash_t *hash);
 void HashToHeap(hash_t * hash, heap_t *heap);

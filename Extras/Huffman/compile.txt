@@ -1,1 +1,0 @@
-gcc main.c Headers/compress.c Headers/compress.h Headers/descompress.c Headers/descompress.h Headers/huff.c Headers/huff.h Headers/hash.c Headers/hash.h Headers/heap.c Headers/heap.h Headers/shared.c Headers/shared.h Headers/info.c Headers/info.h -o vrd -w

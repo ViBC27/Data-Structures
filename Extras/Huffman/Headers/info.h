@@ -18,7 +18,7 @@ struct info {
   infoBytes_t **table;
 };
 struct infoBytes {
-  bool bits[256];
+  bool bits[16];
   int totalBits;
   long int frequency;
 };

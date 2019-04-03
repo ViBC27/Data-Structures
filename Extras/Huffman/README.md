@@ -1,4 +1,4 @@
-﻿## Data Structures: Doubly Linked List versus Binary Search Tree
+﻿## Huffman
 
 This project was created to compose the second note of the Bimonthly Assessment (AB) of the Federal University of Alagoas (UFAL).
 

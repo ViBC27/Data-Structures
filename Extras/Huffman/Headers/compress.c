@@ -14,15 +14,13 @@
 #include "compress.h"
 #include "shared.h"
 
-typedef unsigned char byte_t;
-
 void compress(char *inputFile, char *outputFile) {
   FILE *inFile =  OpenInputFile(inputFile);
   
   hash_t *hash = new_Hash();
   heap_t *heap = new_Heap();
   info_t *bInfo = new_Info();
-  huff_t *root; bool bits[256];
+  huff_t *root; bool bits[16];
   byte_t *bytes;
 
   ReadInputFile(inFile, hash);  
@@ -91,8 +89,8 @@ void MountHeader(byte_t**bytes, int treeSize, int trashSize) {
 void MountFile_Comp(huff_t *tree, info_t *bInfo, char *inputFile, char *outputFile, byte_t *bytes) {
   FILE *inFile = fopen(inputFile, "rb");
   FILE *newFile = fopen(outputFile, "wb");
-  fprintf(newFile, "%c%c", bytes[0], bytes[1]);
   
+  fprintf(newFile, "%c%c", bytes[0], bytes[1]);
   PrintTree_Huff(tree, newFile);
 
   byte_t byte = 0, newByte = 0; int position = 0;

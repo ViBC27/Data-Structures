@@ -11,6 +11,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+typedef unsigned char byte_t;
+
 typedef struct huff huff_t;
 struct huff {
   unsigned char byte;
@@ -19,7 +21,7 @@ struct huff {
   huff_t *right;
 };
 
-huff_t *newItem_Huff(unsigned char byte);
+huff_t *newItem_Huff(byte_t byte);
 huff_t *agroupItems_Huff(huff_t *left, huff_t *right);
 bool isEmpty_Huff(huff_t *tree);
 bool isLeaf_Huff(huff_t *tree);

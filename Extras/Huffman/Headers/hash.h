@@ -11,14 +11,14 @@
 #define SIZE_HASH 256
 #include "huff.h"
 
+typedef unsigned char byte_t;
+
 typedef struct hash hash_t;
 struct hash {
   huff_t **huffTable;
 };
 
 hash_t* new_Hash();
-void erase_Hash(hash_t *hash);
-void put_Hash(hash_t *hash, unsigned char byte);
-void show_Hash(hash_t *hash);
+void put_Hash(hash_t *hash, byte_t byte);
 
 #endif
