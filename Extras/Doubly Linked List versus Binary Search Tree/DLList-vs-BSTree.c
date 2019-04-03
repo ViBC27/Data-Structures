@@ -69,13 +69,12 @@ void add_List_bTree(list_t *list, bTree_t *bTree, int tNumbers) {
   }
   
   for(int i = 0; i < tNumbers; i++) {
-    n = rand();
+    n = rand() % tNumbers;
     if(search_BSTree(bTree, n) != 1) {
       addFront_DLList(list, n);
       add_BSTree(bTree, n);
       fprintf(NUMBERS, "%d\n", n);
     }
   }
-
   fclose(NUMBERS);
 }
