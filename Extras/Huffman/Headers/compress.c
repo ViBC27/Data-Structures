@@ -23,16 +23,16 @@ void compress(char *inputFile, char *outputFile) {
   heap_t *heap = new_Heap();
   info_t *bInfo = new_Info();
   huff_t *root; bool bits[256];
-  byte_t *header;
+  byte_t *bytes;
 
   ReadInputFile(inFile, hash);  
   HashToHeap(hash, heap);
-  root = MountHuffTree_Comp(heap);
+  MountHuffTree_Comp(heap, &root);
   MountInfoTable(root, bInfo, bits, 0);
   int sTree = size_Huff(root);
   int sTrash = size_Trash(bInfo);
-  header = MountHeader(sTree, sTrash);
-  MountFile_Comp(root, bInfo, inputFile, outputFile, header);
+  MountHeader(&bytes, sTree, sTrash);
+  MountFile_Comp(root, bInfo, inputFile, outputFile, bytes);
   printf("Done\n");
 }
 
@@ -53,7 +53,7 @@ void HashToHeap(hash_t * hash, heap_t *heap) {
   }
 }
 
-huff_t* MountHuffTree_Comp(heap_t *heap) {
+void MountHuffTree_Comp(heap_t *heap, huff_t **root) {
   huff_t *item1, *item2, *item3;
   while(heap->size > 1) {
     item1 = dequeue(heap);
@@ -61,7 +61,7 @@ huff_t* MountHuffTree_Comp(heap_t *heap) {
     item3 = agroupItems_Huff(item1, item2);
     enqueue(heap, item3);
   }
-  return dequeue(heap);
+  *root = dequeue(heap);
 }
 
 void MountInfoTable(huff_t *tree, info_t *bInfo, bool bits[], int totalBits) {
@@ -81,44 +81,39 @@ void MountInfoTable(huff_t *tree, info_t *bInfo, bool bits[], int totalBits) {
   }
 }
 
-byte_t* MountHeader(int treeSize, int trashSize) {
-  byte_t *bytes = (byte_t*) malloc(3 * sizeof(byte_t));
-  bytes[0] = trashSize << 5 | treeSize >> 8;
-  bytes[1] = treeSize;
-  return bytes;
+void MountHeader(byte_t**bytes, int treeSize, int trashSize) {
+  byte_t *bytesAux = (byte_t*) malloc(2 * sizeof(byte_t));
+  bytesAux[0] = trashSize << 5 | treeSize >> 8;
+  bytesAux[1] = treeSize;
+  *bytes = bytesAux;
 }
 
-void MountFile_Comp(huff_t *tree, info_t *bInfo, char *inputFile, char *outputFile, byte_t *header) {
-  FILE *pFile = fopen(inputFile, "rb");
+void MountFile_Comp(huff_t *tree, info_t *bInfo, char *inputFile, char *outputFile, byte_t *bytes) {
+  FILE *inFile = fopen(inputFile, "rb");
   FILE *newFile = fopen(outputFile, "wb");
-  fprintf(newFile, "%c%c", header[0], header[1]);
+  fprintf(newFile, "%c%c", bytes[0], bytes[1]);
   
   PrintTree_Huff(tree, newFile);
 
-  byte_t byte = 0, newByte = 0; int pos = 0;
-  while(fscanf(pFile, "%c", &byte) != EOF) {
-    for(int i = 0; i < bInfo->table[byte]->totalBits; i++, pos++) {
-      pos %= 8;
+  byte_t byte = 0, newByte = 0; int position = 0;
+  while(fscanf(inFile, "%c", &byte) != EOF) {
+    for(int i = 0; i < bInfo->table[byte]->totalBits; i++, position++) {
+      position %= 8;
       if(bInfo->table[byte]->bits[i]) {
-        newByte = setBit(newByte, 7 - pos);
+        newByte = set_bit(newByte, 7 - position);
       }
-      if ((pos + 1) % 8 == 0) {
+      if((position + 1) % 8 == 0) {
         fprintf(newFile, "%c", newByte);
         newByte = 0;
       }
     }
   }
 
-  if(header[0] >> 5 != 0) {
+  if(bytes[0] >> 5 != 0) {
     fprintf(newFile, "%c", newByte);
   }
-  fclose(pFile);
+  fclose(inFile);
   fclose(newFile);
-}
-
-unsigned int setBit(unsigned int byte, int i) {
-  unsigned int mask = 1 << i;
-  return(mask | byte);
 }
 
 int size_Trash(info_t *bInfo) {
@@ -132,4 +127,9 @@ int size_Trash(info_t *bInfo) {
   }
 	trashSize = 8 - (trashSize % 8);
   return(trashSize);
+}
+
+unsigned int set_bit(unsigned int byte, int i) {
+  unsigned int mask = 1 << i;
+  return(mask | byte);
 }

@@ -15,11 +15,11 @@
 void compress(char *inputFile, char *outputFile);
 void ReadInputFile(FILE *inFile, hash_t *hash);
 void HashToHeap(hash_t * hash, heap_t *heap);
-huff_t* MountHuffTree_Comp(heap_t *heap);
+void MountHuffTree_Comp(heap_t *heap, huff_t **root);
 void MountInfoTable(huff_t *tree, info_t *bInfo, bool bits[], int totalBits);
-byte_t* MountHeader(int treeSize, int trashSize);
-void MountFile_Comp(huff_t *tree, info_t *bInfo, char *inputFile, char *outputFile, byte_t *header);
-unsigned int setBit(unsigned int byte, int i);
+void MountHeader(byte_t**bytes, int treeSize, int trashSize);
+void MountFile_Comp(huff_t *tree, info_t *bInfo, char *inputFile, char *outputFile, byte_t *bytes);
 int size_Trash(info_t *bInfo);
+unsigned int set_bit(unsigned int byte, int i);
 
 #endif

@@ -13,10 +13,9 @@
 #include "huff.h"
 
 void descompress(char *inputFile, char *outputFile);
-void getHeader(FILE *inputFile, int *sizeTree, int *sizeTrash);
+void DismountHeader(FILE *inputFile, int *sizeTree, int *sizeTrash);
 void MountHuffTree_Des(FILE *inputFile, huff_t **tree, int sizeTree, int i);
-void MountFile_Des(huff_t *tree, FILE *inputFile, FILE *newFile, int sizeTrash);
-bool isBitiSet(unsigned int byte, int i);
+void MountFile_Des(huff_t *tree, FILE *inputFile, FILE *outFile, int sizeTrash);bool is_bit_i_set(unsigned int byte, int i);
 
 
 #endif

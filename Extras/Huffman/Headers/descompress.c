@@ -8,18 +8,15 @@ typedef unsigned char byte_t;
 void descompress(char *inputFile, char *outputFile) {
   FILE *inFile =  OpenInputFile(inputFile);
   FILE *newFile = fopen(outputFile, "wb");
-  
-  huff_t *root; 
-  int sTree, sTrash;
-  getHeader(inFile, &sTree, &sTrash);
+  huff_t *root; int sTree, sTrash;
+  DismountHeader(inFile, &sTree, &sTrash);
   MountHuffTree_Des(inFile, &root, sTree, 0);
-  
   MountFile_Des(root, inFile, newFile, sTrash);
   fclose(inFile);
   fclose(newFile);
 }
 
-void getHeader(FILE *inputFile, int *sizeTree, int *sizeTrash) {
+void DismountHeader(FILE *inputFile, int *sizeTree, int *sizeTrash) {
   byte_t byte;
   fscanf(inputFile, "%c", &byte);
   *sizeTrash = byte >> 5;
@@ -30,70 +27,70 @@ void getHeader(FILE *inputFile, int *sizeTree, int *sizeTrash) {
 
 void MountHuffTree_Des(FILE *inputFile, huff_t **tree, int sizeTree, int i) {
   if(i == sizeTree) return;
-  
   byte_t byte;
   fscanf(inputFile, "%c", &byte);
-  
   if(byte == '*') {
     (*tree) = newItem_Huff(byte);
     MountHuffTree_Des(inputFile, &(*tree)->left, sizeTree, i++); 
     MountHuffTree_Des(inputFile, &(*tree)->right, sizeTree, i++);
   }
+  else if(byte == 92) {
+    fscanf(inputFile, "%c", &byte);
+    (*tree) = newItem_Huff(byte);
+  }
   else {
-    if(byte == 92) {
-      fscanf(inputFile, "%c", &byte);
-      (*tree) = newItem_Huff(byte);
-    }
-    else {
-      (*tree) = newItem_Huff(byte);
-    }
+    (*tree) = newItem_Huff(byte);
   }
 }
 
-void MountFile_Des(huff_t *tree, FILE *inputFile, FILE *newFile, int sizeTrash) {
-  byte_t stringToPrint[10], byte; 
-  int done = 0, i, j;
-  huff_t *curr = tree, *save;
-  while(fscanf(inputFile, "%c", &byte) != EOF) {  
-    save = curr;
-    for(j = 0; j < done; j++) {
-      fprintf(newFile, "%c", stringToPrint[j]);
-    }
+void MountFile_Des(huff_t *tree, FILE *inputFile, FILE *outFile, int sizeTrash) {
+  
+  // Bit a bit de byte em byte;
+  // Setado: Right, Não setado: Left;
 
-    for(i = 7, done = 0; i >= 0; i --) {
-      if (isBitiSet(byte, i)) {
-        curr = curr->right;
+  byte_t bytesPrint[10], byte; 
+  int totalBytes = 0, i, j;
+  huff_t *current = tree, *save;
+
+  while(fscanf(inputFile, "%c", &byte) != EOF) {  
+    save = current; // Não cheguei em nenhuma folha. Devo continuar de onde parei.
+    for(j = 0; j < totalBytes; j++) {
+      fprintf(outFile, "%c", bytesPrint[j]);
+    }
+    for(i = 7, totalBytes = 0; i >= 0; i--) {
+      if(is_bit_i_set(byte, i)) {
+        current = current->right;
       }
       else {
-        curr = curr->left;
+        current = current->left;
       }
-      if(isLeaf_Huff(curr)) {
-        stringToPrint[done ++] = curr->byte;
-        curr = tree;
+      if(isLeaf_Huff(current)) {
+        bytesPrint[totalBytes++] = current->byte;
+        current = tree;
       }
     }
   }
 
-  curr = save;
-  for(i = 7, done = 0; i >= sizeTrash; i --) {
-    if(isBitiSet(byte, i)) {
-      curr = curr->right;
+  current = save; // Último byte
+  for(i = 7, totalBytes = 0; i >= sizeTrash; i--) {
+    if(is_bit_i_set(byte, i)) {
+      current = current->right;
     }
     else {
-      curr = curr->left;
+      current = current->left;
     }
-    if(isLeaf_Huff(curr)) {
-      stringToPrint[done ++] = curr->byte;
-      curr = tree;
+    if(isLeaf_Huff(current)) {
+      bytesPrint[totalBytes ++] = current->byte;
+      current = tree;
     }
   }
 
-  for (j = 0; j < done; j ++) {
-    fprintf(newFile, "%c", stringToPrint[j]);
+  for(j = 0; j < totalBytes; j++) {
+    fprintf(outFile, "%c", bytesPrint[j]);
   }
 }
 
-bool isBitiSet(unsigned int byte, int i) {
+bool is_bit_i_set(unsigned int byte, int i) {
   unsigned int mask = 1 << i;
   return(mask & byte);
 }
